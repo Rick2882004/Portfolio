@@ -1,26 +1,222 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #02040a;
+  --foreground: #ffffff;
+  --color-space-black: #02040a;
+  --color-space-grey: #0f172a;
+  --color-nebula-blue: #0b1a30;
+  --color-neon-cyan: #06b6d4;
+  --color-neon-purple: #7c3aed;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-space-black: var(--color-space-black);
+  --color-space-grey: var(--color-space-grey);
+  --color-nebula-blue: var(--color-nebula-blue);
+  --color-neon-cyan: var(--color-neon-cyan);
+  --color-neon-purple: var(--color-neon-purple);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base resets */
+html, body {
+  background-color: #02040a;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-geist-sans), sans-serif;
+  user-select: none;
+}
+
+/* Glassmorphism utility classes */
+.glass-hud {
+  background: rgba(2, 4, 10, 0.45);
+  backdrop-filter: blur(28px) saturate(120%);
+  -webkit-backdrop-filter: blur(28px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
+}
+
+.glass-card {
+  background: rgba(3, 7, 18, 0.55);
+  backdrop-filter: blur(32px) saturate(130%);
+  -webkit-backdrop-filter: blur(32px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.15), 
+    0 10px 30px -10px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(6, 182, 212, 0.28);
+  box-shadow: 
+    0 22px 48px -10px rgba(0, 0, 0, 0.95), 
+    0 0 20px rgba(6, 182, 212, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Premium Glassmorphic Side Panel with Double Border Gradient Mask */
+.glass-panel {
+  background: linear-gradient(135deg, rgba(2, 4, 10, 0.6) 0%, rgba(2, 4, 10, 0.8) 100%);
+  backdrop-filter: blur(48px) saturate(140%);
+  -webkit-backdrop-filter: blur(48px) saturate(140%);
+  box-shadow: 
+    0 40px 80px -20px rgba(0, 0, 0, 0.95),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* border thickness */
+  background: linear-gradient(
+    180deg, 
+    rgba(255, 255, 255, 0.09) 0%, 
+    rgba(255, 255, 255, 0.02) 40%, 
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(2, 4, 10, 0.15);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.35);
+}
+
+/* CRT Scanline & Grid Effect for HUD */
+.hud-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* Subtle cinematic scanline pattern */
+.scanlines {
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 50%, 
+    rgba(0, 0, 0, 0.08) 50%
+  );
+  background-size: 100% 4px;
+  position: absolute;
+  inset: 0;
+  z-index: 98;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+/* Procedural animated film grain noise overlay */
+@keyframes grain-animation {
+  0%, 100% { transform:translate(0, 0) }
+  10% { transform:translate(-2%, -4%) }
+  20% { transform:translate(-6%, 2%) }
+  30% { transform:translate(3%, -8%) }
+  40% { transform:translate(-2%, 8%) }
+  50% { transform:translate(-6%, 4%) }
+  60% { transform:translate(6%, 0%) }
+  75% { transform:translate(-4%, 3%) }
+  90% { transform:translate(4%, -4%) }
+}
+
+.film-grain {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.012'/%3E%3C/svg%3E");
+  animation: grain-animation 10s steps(10) infinite;
+  pointer-events: none;
+  z-index: 99;
+}
+
+@keyframes visualizer-bounce {
+  0% { transform: scaleY(0.15); transform-origin: bottom; }
+  100% { transform: scaleY(1.0); transform-origin: bottom; }
+}
+
+@keyframes scroll-dot-slide {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(6px); opacity: 0; }
+}
+
+@keyframes float-slow {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(15px, -15px) scale(1.1); }
+  66% { transform: translate(-10px, 12px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes float-slow-reverse {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-12px, 18px) scale(0.95); }
+  66% { transform: translate(15px, -10px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes ray-sweep-1 {
+  0% { transform: rotate(-35deg) translateX(-8%); opacity: 0.55; }
+  50% { transform: rotate(-35deg) translateX(8%); opacity: 0.95; }
+  100% { transform: rotate(-35deg) translateX(-8%); opacity: 0.55; }
+}
+
+@keyframes ray-sweep-2 {
+  0% { transform: rotate(-40deg) translateX(4%); opacity: 0.75; }
+  50% { transform: rotate(-40deg) translateX(-12%); opacity: 0.45; }
+  100% { transform: rotate(-40deg) translateX(4%); opacity: 0.75; }
+}
+
+/* Keyboard Focus outlines for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 1.5px solid #22d3ee;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.05s !important;
+    transition-delay: 0s !important;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
