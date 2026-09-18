@@ -52,19 +52,19 @@ export default function HudOverlay() {
       <div className="absolute bottom-6 right-6 w-3 h-3 border-b border-r border-cyan-400/40" />
  
       {/* 4. Top Header Navigation Banner */}
-      <div className="absolute top-6 left-12 right-12 flex justify-between items-center text-[8.5px] font-mono tracking-[0.22em] text-white/40">
+      <div className="absolute top-6 left-6 sm:left-12 right-6 sm:right-12 flex justify-between items-center text-[8.5px] font-mono tracking-[0.22em] text-white/40">
         <div className="flex items-center space-x-3">
           <div className="w-[6px] h-[6px] rounded-full bg-cyan-400/70 animate-pulse" />
           <span className="font-bold text-white/70">ABHISHEK // DEV</span>
         </div>
         
         {/* Clickable Navigation Links */}
-        <div className="flex items-center space-x-5 pointer-events-auto">
+        <div className="flex items-center space-x-2.5 sm:space-x-5 pointer-events-auto">
           <motion.button
             onClick={() => setActiveSection("ABOUT")}
             whileTap={{ scale: 0.98 }}
             aria-label="View About Section"
-            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1.5 ${activeSection === "ABOUT" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
+            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1 sm:px-1.5 ${activeSection === "ABOUT" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
           >
             [ ABOUT ]
           </motion.button>
@@ -72,15 +72,23 @@ export default function HudOverlay() {
             onClick={() => setActiveSection("TIMELINE")}
             whileTap={{ scale: 0.98 }}
             aria-label="View Project Timeline"
-            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1.5 ${activeSection === "TIMELINE" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
+            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1 sm:px-1.5 ${activeSection === "TIMELINE" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
           >
             [ TIMELINE ]
+          </motion.button>
+          <motion.button
+            onClick={() => setActiveSection("RESUME")}
+            whileTap={{ scale: 0.98 }}
+            aria-label="View Resume / CV"
+            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1 sm:px-1.5 ${activeSection === "RESUME" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
+          >
+            [ RESUME ]
           </motion.button>
           <motion.button
             onClick={() => setActiveSection("CONTACT")}
             whileTap={{ scale: 0.98 }}
             aria-label="View Contact Section"
-            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1.5 ${activeSection === "CONTACT" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
+            className={`transition-colors duration-300 font-mono tracking-widest text-[8px] bg-transparent border-none cursor-pointer uppercase font-bold py-1 px-1 sm:px-1.5 ${activeSection === "CONTACT" ? "text-cyan-400" : "text-white/40 hover:text-white/75"}`}
           >
             [ CONTACT ]
           </motion.button>

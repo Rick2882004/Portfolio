@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export type TransitionState = "IDLE" | "ZOOMING_IN" | "FOCUSED" | "ZOOMING_OUT";
 export type ViewState = "HOME" | "PROJECT";
-export type ActiveSection = "ABOUT" | "TIMELINE" | "CONTACT" | null;
+export type ActiveSection = "ABOUT" | "TIMELINE" | "CONTACT" | "RESUME" | null;
 
 interface GalaxyStore {
   selectedProjectId: string | null;
